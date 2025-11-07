@@ -1,0 +1,40 @@
+POLITIQUE DE CONFIDENTIALITÉ - FOCUS BLOCKER
+
+Dernière mise à jour : 7 novembre 2025
+
+Cette extension Chrome ("Focus Blocker") respecte votre vie privée.
+
+1. COLLECTE DE DONNÉES
+Focus Blocker ne collecte AUCUNE donnée personnelle.
+
+2. STOCKAGE LOCAL
+Toutes les données suivantes sont stockées LOCALEMENT sur votre navigateur :
+- Paramètres de durée Pomodoro (temps de travail/pause)
+- Statistiques de productivité (sessions complétées, minutes totales)
+- État du blocage (activé/désactivé)
+- Liste des sites bloqués
+
+3. AUCUNE TRANSMISSION
+Aucune donnée n'est transmise à des serveurs externes.
+Aucune donnée n'est partagée avec des tiers.
+Aucun tracking ou analytics.
+
+4. PERMISSIONS UTILISÉES
+- storage : Sauvegarde locale de vos paramètres
+- declarativeNetRequest : Blocage des sites distrayants
+- notifications : Alertes de fin de session Pomodoro
+- host_permissions : Affichage de la page de blocage
+
+5. VOS DROITS
+Vous pouvez supprimer toutes vos données à tout moment en :
+- Désinstallant l'extension
+- Cliquant sur "Effacer les données" dans chrome://extensions
+
+6. MODIFICATIONS
+Cette politique peut être mise à jour. Les changements seront notifiés via les notes de version.
+
+7. CONTACT
+Pour toute question : raphael.hoarau@epitech.eu
+Code source : https://github.com/horaphael/FocusBlocker?tab=readme-ov-file
+
+Focus Blocker est une extension open-source qui respecte votre vie privée.

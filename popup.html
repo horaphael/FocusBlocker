@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Focus Blocker</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    .container {
+      background: transparent;
+      padding: 24px;
+      border-radius: 0;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    h3 {
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+    
+    .status-card {
+      background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      text-align: center;
+      border: 2px solid #e2e8f0;
+      transition: all 0.3s ease;
+    }
+    
+    .status-card.active {
+      background: linear-gradient(135deg, #d4f4dd 0%, #c3f4d7 100%);
+      border-color: #48bb78;
+    }
+    
+    .status-text {
+      font-size: 14px;
+      color: #4a5568;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .status-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #cbd5e0;
+      animation: pulse 2s infinite;
+    }
+    
+    .status-card.active .status-indicator {
+      background: #48bb78;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* Timer Pomodoro */
+    .pomodoro-section {
+      background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      border: 2px solid #fc8181;
+    }
+    
+    .pomodoro-section.running {
+      background: linear-gradient(135deg, #fef5e7 0%, #fad7a0 100%);
+      border-color: #f39c12;
+    }
+    
+    .pomodoro-section.break {
+      background: linear-gradient(135deg, #e8f8f5 0%, #a3e4d7 100%);
+      border-color: #48bb78;
+    }
+    
+    .timer-settings {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .setting-group {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .setting-label {
+      font-size: 10px;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    
+    .setting-input {
+      width: 100%;
+      padding: 6px 8px;
+      border: 2px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+      color: #2d3748;
+      transition: border-color 0.2s;
+    }
+    
+    .setting-input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .timer-display {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    
+    .timer-mode {
+      font-size: 12px;
+      color: #667eea;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    
+    .pomodoro-section.running .timer-mode {
+      color: #f39c12;
+    }
+    
+    .pomodoro-section.break .timer-mode {
+      color: #48bb78;
+    }
+    
+    .timer-time {
+      font-size: 42px;
+      font-weight: 700;
+      color: #2d3748;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 2px;
+    }
+    
+    .timer-controls {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .timer-btn {
+      flex: 1;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+      color: #4a5568;
+      border: 2px solid #e2e8f0;
+    }
+    
+    .timer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .timer-btn.primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+    }
+    
+    .timer-btn.primary.running {
+      background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+    }
+    
+    .pomodoro-stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2d3748;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: #718096;
+      margin-top: 2px;
+    }
+    
+    #toggleBtn {
+      width: 100%;
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    #toggleBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+    
+    #toggleBtn:active {
+      transform: translateY(0);
+    }
+    
+    #toggleBtn.active {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+    }
+    
+    #toggleBtn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    #toggleBtn:active::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 11px;
+      color: #4a5568;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="icon-48.png" alt="Focus Blocker" class="icon">
+      <h3>Focus Blocker</h3>
+    </div>
+    
+    <div class="status-card" id="statusCard">
+      <div class="status-text">
+        <span class="status-indicator"></span>
+        <span id="statusText">Inactif</span>
+      </div>
+    </div>
+    
+    <div class="pomodoro-section" id="pomodoroSection">
+      <div class="timer-settings">
+        <div class="setting-group">
+          <div class="setting-label">Travail (min)</div>
+          <input type="number" id="workDuration" class="setting-input" min="1" max="90" value="25">
+        </div>
+        <div class="setting-group">
+          <div class="setting-label">Pause (min)</div>
+          <input type="number" id="breakDuration" class="setting-input" min="1" max="30" value="5">
+        </div>
+      </div>
+      
+      <div class="timer-controls">
+        <button class="timer-btn primary" id="startPomodoroBtn">🍅 Lancer le Timer</button>
+      </div>
+      
+      <div class="pomodoro-stats">
+        <div class="stat">
+          <div class="stat-value" id="completedPomodoros">0</div>
+          <div class="stat-label">Sessions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="totalMinutes">0</div>
+          <div class="stat-label">Minutes</div>
+        </div>
+      </div>
+    </div>
+    
+    <button id="toggleBtn">Activer le blocage</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
