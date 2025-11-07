@@ -1,4 +1,4 @@
-# Focus Blocker 🧠
+# Focus Blocker
 
 Une extension Chrome pour rester concentré en bloquant les sites distrayants et gérer ton temps avec la technique Pomodoro.
 
@@ -57,7 +57,7 @@ Tu peux modifier les sites bloqués dans `background.js` :
 const blockedSites = ["youtube.com", "tiktok.com", "facebook.com"];
 ```
 
-## 🔒 Confidentialité
+## Confidentialité
 
 Focus Blocker respecte ta vie privée :
 - Toutes les données restent locales
@@ -89,4 +89,4 @@ Les contributions sont les bienvenues ! N'hésite pas à :
 
 ---
 
-**Reste concentré, travaille mieux ! 🚀**
+**Reste concentré, travaille mieux !**
