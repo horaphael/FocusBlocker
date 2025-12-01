@@ -1,4 +1,3 @@
-// Récupération des éléments
 const timerModeEl = document.getElementById('timerMode');
 const timerDisplayEl = document.getElementById('timerDisplay');
 const pauseBtn = document.getElementById('pauseBtn');
@@ -22,7 +21,7 @@ function updateDisplay() {
   timerDisplayEl.textContent = formatTime(timeRemaining);
   
   if (isWorkSession) {
-    timerModeEl.textContent = '🍅 Session de travail';
+    timerModeEl.textContent = 'Session de travail';
     document.body.classList.remove('break');
     document.body.classList.add('work');
   } else {
@@ -63,7 +62,6 @@ function startTimer() {
     if (timeRemaining <= 0) {
       clearInterval(timerInterval);
       
-      // Notification
       chrome.notifications.create({
         type: 'basic',
         iconUrl: 'icon-128.png',
@@ -73,7 +71,6 @@ function startTimer() {
       });
 
       if (isWorkSession) {
-        // Session de travail terminée → Passer en pause
         chrome.storage.sync.get(['completedPomodoros', 'totalMinutes'], (data) => {
           const completed = (data.completedPomodoros || 0) + 1;
           const workMinutes = Math.floor(WORK_TIME / 60);
@@ -88,14 +85,10 @@ function startTimer() {
         isWorkSession = false;
         timeRemaining = BREAK_TIME;
         
-        // DÉSACTIVER le blocage pendant la pause !
         chrome.storage.local.set({ isEnabled: false, pomodoroMode: true });
       } else {
-        // Pause terminée → Retour au travail
         isWorkSession = true;
-        timeRemaining = WORK_TIME;
-        
-        // RÉACTIVER le blocage pour le travail
+        timeRemaining = WORK_TIME;        
         chrome.storage.local.set({ isEnabled: true, pomodoroMode: true });
       }
 
@@ -125,21 +118,15 @@ function resetTimer() {
   isWorkSession = true;
   timeRemaining = WORK_TIME;
   
-  // Désactiver le mode Pomodoro
   chrome.storage.local.set({ pomodoroMode: false, isEnabled: false });
   
   updateDisplay();
   saveState();
   
-  // Fermer la fenêtre
   window.close();
 }
-
-// Event listeners
 pauseBtn.addEventListener('click', togglePause);
 resetBtn.addEventListener('click', resetTimer);
-
-// Charger l'état au démarrage
 chrome.storage.local.get([
   'pomodoroTimeRemaining',
   'pomodoroIsWorkSession',
@@ -162,7 +149,6 @@ chrome.storage.local.get([
   }
 });
 
-// Écouter les changements de storage pour mettre à jour les stats
 chrome.storage.onChanged.addListener((changes, namespace) => {
   if (namespace === 'sync' && (changes.completedPomodoros || changes.totalMinutes)) {
     updateStats();

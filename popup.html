@@ -297,6 +297,109 @@
       color: #4a5568;
       text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
     }
+    
+    .sites-section {
+      background: rgba(255, 255, 255, 0.82);
+      padding: 16px;
+      border-radius: 12px;
+      border: 2px solid rgba(0, 0, 0, 0.06);
+      margin-bottom: 14px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+    
+    .sites-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: #2d3748;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    
+    .site-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .site-input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .site-input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+    
+    .add-site-btn {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+    }
+    
+    .add-site-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(102, 126, 234, 0.4);
+    }
+    
+    .site-list {
+      max-height: 150px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .site-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #2d3748;
+      font-weight: 600;
+    }
+    
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #e53e3e;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    
+    .remove-btn:hover {
+      color: #c53030;
+    }
+    
+    .sites-hint {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #718096;
+    }
+    
+    .empty-sites {
+      text-align: center;
+      color: #718096;
+      font-size: 13px;
+      padding: 6px 0;
+    }
   </style>
 </head>
 <body>
@@ -326,7 +429,7 @@
       </div>
       
       <div class="timer-controls">
-        <button class="timer-btn primary" id="startPomodoroBtn">🍅 Lancer le Timer</button>
+        <button class="timer-btn primary" id="startPomodoroBtn">Lancer le Timer</button>
       </div>
       
       <div class="pomodoro-stats">
@@ -336,9 +439,21 @@
         </div>
         <div class="stat">
           <div class="stat-value" id="totalMinutes">0</div>
-          <div class="stat-label">Minutes</div>
+      <div class="stat-label">Minutes</div>
         </div>
       </div>
+    </div>
+    
+    <div class="sites-section">
+      <div class="sites-header">
+        <span>Sites à bloquer</span>
+      </div>
+      <div class="site-form">
+        <input type="text" id="siteInput" class="site-input" placeholder="ex: youtube.com">
+        <button class="add-site-btn" id="addSiteBtn">Ajouter</button>
+      </div>
+      <div id="blockedList" class="site-list"></div>
+      <div class="sites-hint">Ajoutez les domaines à rediriger lorsque le blocage est actif.</div>
     </div>
     
     <button id="toggleBtn">Activer le blocage</button>
